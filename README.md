@@ -8,7 +8,7 @@
 # Review and merge PRs from your terminal
 #
 # Usage:
-#  git-review <pr-number>
+#  git review <pr-number>
 #
 # Options:
 #   <pr-number>    GitHub pull request number
