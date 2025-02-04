@@ -8,6 +8,8 @@
 # Options:
 #   <pr-number>    GitHub pull request number
 #
+# All flags and options are passed to "gh pr review".
+#
 # @example
 # git review 1234
 
@@ -28,6 +30,7 @@ EOF
 
 # Parse arguments
 pull_request=""
+review_args=()
 
 while [ "${1:-}" != "" ]; do
   case "$1" in
@@ -35,7 +38,10 @@ while [ "${1:-}" != "" ]; do
     usage
     exit 1
     ;;
-    # Matches every non-integer argument
+  -*)
+    review_args+=("$1")
+    shift
+    ;;
   *[!0-9]*)
     usage
     exit 1
@@ -62,7 +68,7 @@ fi
 
 main() {
   gh pr diff "$pull_request"
-  gh pr review "$pull_request"
+  gh pr review "${review_args[@]}" "$pull_request"
   gh pr merge --merge --delete-branch "$pull_request"
 }
 
